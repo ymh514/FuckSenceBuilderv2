@@ -100,6 +100,7 @@ public class Main extends Application {
 
 						
 					//}
+					System.out.println(e2.getTarget());
 				});
 				canvas.setOnMouseDragged(e3 ->{
 					mouseDragged.handle(e3);
@@ -212,7 +213,11 @@ public class Main extends Application {
 				canvas.setOnMousePressed(e1 ->{
 					x1 = mousePress.getX(e1);
 					y1 = mousePress.getY(e1);
-					canvas.drawCase();;
+					canvas.drawCase();
+				});
+				canvas.setOnMouseDragged(e3 ->{
+					x2 = mouseDragged.getX(e3);
+					y2 = mouseDragged.getY(e3);
 				});
 				canvas.setOnMouseReleased(e2 ->{
 					x2 = mouseRelease.getX(e2);
@@ -247,36 +252,128 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+	class MyClass extends Rectangle{
+		//protected Line line = this.line;
+	    
+		public MyClass(){
+	    	this.setStroke(Color.BLACK);
+	    	this.setFill(Color.RED);
+	    	this.setX(x1);
+	    	this.setY(y1);
+	    	this.setWidth(100);
+	    	this.setHeight(120);
+		}
+		int getX1(){
+			return x1;
+		}
+		int getY1(){
+			return y1;
+		}
+		int getX2(){
+			return x2;
+		}
+		int getY2(){
+			return y2;
+		}
 		
-	public class MyPane extends Pane {
-	    private Line line;
-	    private Rectangle rect;
-	    private Ellipse ellipse;
-	    private Pane ptemp ;
+	}
+	
+	class MyCase extends Ellipse{
+		
+		public MyCase(){
+	    	this.setStroke(Color.BLACK);
+	    	this.setFill(Color.RED);
+	    	this.setCenterX(x1);
+	    	this.setCenterY(y1);
+	    	this.setRadiusX(60);
+	    	this.setRadiusY(40);
+		}
+		int getCenterX1(){
+			return x1;
+		}
+		int getCenterY1(){
+			return y1;
+		}
+		int getRadiusX1(){
+			return 60;
+		}
+		int getRadiusY1(){
+			return 40;
+		}
+
+	}
+	
+	class MyLine extends Line{
+		
+		public MyLine(){
+	    	this.setStrokeWidth(2);
+	    	this.setStartX(x1);
+	    	this.setStartY(y1);
+	    	this.setEndX(x1);
+	    	this.setEndY(y1);
+		}
+		int getX1(){
+			return x1;
+		}
+		int getY1(){
+			return y1;
+		}
+		int getX2(){
+			return x2;
+		}
+		int getY2(){
+			return y2;
+		}
+
+	}
+
+	
+	class MyPane extends Pane {
+	    /*
+		protected Line line;
+	    protected Rectangle rect;
+	    protected Ellipse ellipse;
+	    protected Pane ptemp ;
+	    */
+		protected MyClass myClass ;
+		protected MyCase myCase;
+		protected MyLine myLine;
+	   // public Line getLine(){
+	   // 	return this.line;
+	   // }
+	    
+	   // public void setLine(Line line){
+	   /// 	this.line = line;
+	   // }
 	    
 	    public MyPane(double width, double height){
 	    	super.setPrefSize(width, height);
 	    	//super.setStyle("-fx-background-color: #2f4f4f");
 	    }
 	    
-	    public void drawLine(){
-	    	
+	    protected void drawLine(){
+	    	myLine = new MyLine();
+	    	/*
 	    	line = new Line();
 	    	line.setStrokeWidth(2);
 	    	line.setStartX(x1);
 	    	line.setStartY(y1);
 	    	line.setEndX(x1);
 	    	line.setEndY(y1);
-	    	super.getChildren().add(line);
+	    	*/
+	    	
+	    	super.getChildren().add(myLine);
 	    }
-	    public void tuneLine(){
-	    	line.setEndX(x2);
-	    	line.setEndY(y2);
+	    protected void tuneLine(){
+	    	myLine.setEndX(x2);
+	    	myLine.setEndY(y2);
 	    }
 	    
-	    public void drawRect(){
+	    protected void drawRect(){
+			myClass = new MyClass();
 	    	//ptemp = new Pane();
-	    	//ptemp.setStyle("-fx-background-color: black;");
+	    	//ptemp.setStyle("-fx-background-color: black;");\
+	    	/*
 	    	rect = new Rectangle();
 	    	rect.setStroke(Color.BLACK);
 	    	rect.setFill(Color.RED);
@@ -284,14 +381,17 @@ public class Main extends Application {
 	    	rect.setY(y1);
 	    	rect.setWidth(100);
 	    	rect.setHeight(120);
+	    	*/
 	    	//ptemp.setLayoutX(x1);
 	    	//ptemp.setLayoutY(y1);
 	    	//ptemp.getChildren().add(rect);
-	    	super.getChildren().add(rect);
+	    	super.getChildren().add(myClass);
 	    }
-	    public void drawCase(){
+	    protected void drawCase(){
+	    	myCase = new MyCase();
 	    	//ptemp = new Pane();
 	    	//ptemp.setStyle("-fx-background-color: black;");
+	    	/*
 	    	ellipse = new Ellipse();
 	    	ellipse.setStroke(Color.BLACK);
 	    	ellipse.setFill(Color.RED);
@@ -299,10 +399,11 @@ public class Main extends Application {
 	    	ellipse.setCenterY(y1);
 	    	ellipse.setRadiusX(60);
 	    	ellipse.setRadiusY(40);
+	    	*/
 	    	//ptemp.setLayoutX(x1);
 	    	//ptemp.setLayoutY(y1);
 	    	//ptemp.getChildren().add(ellipse);
-	    	super.getChildren().add(ellipse);
+	    	super.getChildren().add(myCase);
 
 	    }
 	}
