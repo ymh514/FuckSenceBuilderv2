@@ -1,2 +1,2 @@
 # FuckSenceBuilderv2
-as title fuck u
+as title
