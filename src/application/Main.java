@@ -259,13 +259,14 @@ public class Main extends Application {
 				});
 				canvas.setOnMouseReleased(e1 ->{
 					System.out.println("release get target : "+e1.getTarget());
-					if(e1.getTarget() instanceof Main.ObjPane){
+					//if(e1.getTarget() instanceof Main.ObjPane){
 						
-						ObjPane p = (ObjPane)(e1.getTarget());
-						x2 = mouseDragged.getX(e1);
-						y2 = mouseDragged.getY(e1);
-			
+						x2 = mouseRelease.getX(e1);
+						y2 = mouseRelease.getY(e1);
 						
+						int objno = checkObj(x2, y2);
+						ObjPane p = (ObjPane)(objPanList.get(objno));
+  
 						double distcp1 = Math.hypot((p.getcp1x()+p.getX1())-x2,(p.getcp1y()+p.getY1())-y2);
 						double distcp2 = Math.hypot((p.getcp2x()+p.getX1())-x2,(p.getcp2y()+p.getY1())-y2);
 						double distcp3 = Math.hypot((p.getcp3x()+p.getX1())-x2,(p.getcp3y()+p.getY1())-y2);
@@ -282,7 +283,7 @@ public class Main extends Application {
 						}else if(dtemp == distcp4){
 							canvas.tuneLine(p.getcp4x()+p.getX1(),p.getcp4y()+p.getY1());
 						}
-					}
+					//}
 				});
 						
 			});
