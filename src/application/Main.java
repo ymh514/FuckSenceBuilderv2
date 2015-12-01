@@ -100,9 +100,80 @@ public class Main extends Application {
 
 				System.out.println("Mode is : "+btnMode);
 				canvas.setOnMousePressed(e2 ->{
+					System.out.println("press event ! ");
 					mousePress.handle(e2);
 
 					if(e2.getTarget() instanceof Main.ObjPane){
+						
+						ObjPane p = (ObjPane)(e2.getTarget());
+						
+						System.out.println("size : "+p.getChildren().size());
+						
+						if(canvas.getChildren().size()>0){
+							for(int j=0;j<canvas.getChildren().size();j++){
+								if(canvas.getChildren().get(j) instanceof Main.ObjPane){
+									ObjPane delp = (ObjPane)(canvas.getChildren().get(j));
+									if(delp.getChildren().size()>1){
+										int deli=4;
+										while(deli!=0){
+											delp.getChildren().remove(1);
+											deli--;
+										}
+									}
+								}
+							}
+						}
+						
+						canvas.getChildren().clear();
+						
+						for(int i=0;i<objPanList.size();i++){
+							canvas.getChildren().add(objPanList.get(i));
+						}
+						for(int i=0;i<lineList.size();i++){
+							canvas.getChildren().add(lineList.get(i));
+						}
+						
+						
+
+						double x1 = p.getLayoutX();
+						double y1 = p.getLayoutY();
+						int obj = checkObj(x1, y1);
+						//System.out.println("###"+obj);
+						objPanList.get(obj).setSelect(true);
+						
+						//set other false
+						for(int i =0;i<objPanList.size();i++){
+							if(i!=obj){
+								objPanList.get(i).setSelect(false);
+								//System.out.println("in atleas : "+i);
+							}
+						}
+						
+						if(objPanList.get(obj).getSelect()==true){
+							Rectangle rcp1 = new Rectangle(p.getcp1x(),p.getcp1y(),4,4);
+							Rectangle rcp2 = new Rectangle(p.getcp2x(),p.getcp2y(),4,4);
+							Rectangle rcp3 = new Rectangle(p.getcp3x(),p.getcp3y(),4,4);
+							Rectangle rcp4 = new Rectangle(p.getcp4x(),p.getcp4y(),4,4);
+	
+							rcp1.setFill(Color.BLUE);
+							rcp2.setFill(Color.BLUE);
+							rcp3.setFill(Color.BLUE);
+							rcp4.setFill(Color.BLUE);
+	
+							p.getChildren().addAll(rcp1,rcp2,rcp3,rcp4);
+						}
+
+					}
+					
+					//if press on the balnk space
+					if(e2.getTarget() instanceof Main.MyPane){
+						
+						//set all false
+						for(int i =0;i<objPanList.size();i++){
+							objPanList.get(i).setSelect(false);
+							//System.out.println("in atleas : "+i);
+							
+						}
 						
 						if(canvas.getChildren().size()>0){
 							for(int j=0;j<canvas.getChildren().size();j++){
@@ -119,38 +190,13 @@ public class Main extends Application {
 							}
 						}
 						
+						canvas.getChildren().clear();
 						
-						ObjPane p = (ObjPane)(e2.getTarget());
-						
-						Rectangle rcp1 = new Rectangle(p.getcp1x(),p.getcp1y(),4,4);
-						Rectangle rcp2 = new Rectangle(p.getcp2x(),p.getcp2y(),4,4);
-						Rectangle rcp3 = new Rectangle(p.getcp3x(),p.getcp3y(),4,4);
-						Rectangle rcp4 = new Rectangle(p.getcp4x(),p.getcp4y(),4,4);
-
-						rcp1.setFill(Color.BLUE);
-						rcp2.setFill(Color.BLUE);
-						rcp3.setFill(Color.BLUE);
-						rcp4.setFill(Color.BLUE);
-
-						p.getChildren().addAll(rcp1,rcp2,rcp3,rcp4);
-
-					}
-					
-					//clean all connection ports
-					if(e2.getTarget() instanceof Main.MyPane){
-						if(canvas.getChildren().size()>0){
-							for(int j=0;j<canvas.getChildren().size();j++){
-								if(canvas.getChildren().get(j) instanceof Main.ObjPane){
-									ObjPane q = (ObjPane) canvas.getChildren().get(j);
-									if(q.getChildren().size()>1){
-										int i = 4;
-										while(i!=0){
-										q.getChildren().remove(1);
-										i--;
-										}
-									}
-								}
-							}
+						for(int i=0;i<objPanList.size();i++){
+							canvas.getChildren().add(objPanList.get(i));
+						}
+						for(int i=0;i<lineList.size();i++){
+							canvas.getChildren().add(lineList.get(i));
 						}
 					}
 				});
@@ -158,18 +204,6 @@ public class Main extends Application {
 				canvas.setOnMouseDragged(e3 ->{
 					mouseDragged.handle(e3);
 
-					if(e3.getTarget() instanceof Main.ObjPane){
-						ObjPane p = (ObjPane)(e3.getTarget());
-						//System.out.println(p.getChildren());
-						if(p.getChildren().size()>1){
-							int i = 4;
-							while(i!=0){
-								p.getChildren().remove(1);
-								i--;
-							}
-						}
-					}
-					
 				});
 				
 				canvas.setOnMouseReleased(e1 ->{
@@ -179,6 +213,7 @@ public class Main extends Application {
 					
 					if(e1.getTarget() instanceof Main.ObjPane){
 						ObjPane p = (ObjPane)(e1.getTarget());
+						/*
 						Rectangle rcp1 = new Rectangle(p.getcp1x(),p.getcp1y(),4,4);
 						Rectangle rcp2 = new Rectangle(p.getcp2x(),p.getcp2y(),4,4);
 						Rectangle rcp3 = new Rectangle(p.getcp3x(),p.getcp3y(),4,4);
@@ -190,7 +225,7 @@ public class Main extends Application {
 						rcp4.setFill(Color.BLUE);
 
 						p.getChildren().addAll(rcp1,rcp2,rcp3,rcp4);
-						
+						*/
 						if(p.getCp1Linked()==true){
 							/*
 							 * fuck this idLineIndex
@@ -503,7 +538,14 @@ public class Main extends Application {
 						}
 					}
 				}
+				canvas.getChildren().clear();
 				
+				for(int i=0;i<objPanList.size();i++){
+					canvas.getChildren().add(objPanList.get(i));
+				}
+				for(int i=0;i<lineList.size();i++){
+					canvas.getChildren().add(lineList.get(i));
+				}
 				/*
 				 * draw line 
 				 */
@@ -624,7 +666,14 @@ public class Main extends Application {
 						}
 					}
 				}
+				canvas.getChildren().clear();
 				
+				for(int i=0;i<objPanList.size();i++){
+					canvas.getChildren().add(objPanList.get(i));
+				}
+				for(int i=0;i<lineList.size();i++){
+					canvas.getChildren().add(lineList.get(i));
+				}
 				/*
 				 * draw line 
 				 */
@@ -748,7 +797,14 @@ public class Main extends Application {
 						}
 					}
 				}
+				canvas.getChildren().clear();
 				
+				for(int i=0;i<objPanList.size();i++){
+					canvas.getChildren().add(objPanList.get(i));
+				}
+				for(int i=0;i<lineList.size();i++){
+					canvas.getChildren().add(lineList.get(i));
+				}
 				/*
 				 * draw line 
 				 */
@@ -870,6 +926,14 @@ public class Main extends Application {
 						}
 					}
 				}
+				canvas.getChildren().clear();
+				
+				for(int i=0;i<objPanList.size();i++){
+					canvas.getChildren().add(objPanList.get(i));
+				}
+				for(int i=0;i<lineList.size();i++){
+					canvas.getChildren().add(lineList.get(i));
+				}
 				
 				System.out.println("Mode is : "+btnMode);
 				canvas.setOnMousePressed(e1 ->{
@@ -909,6 +973,14 @@ public class Main extends Application {
 							}
 						}
 					}
+				}
+				canvas.getChildren().clear();
+				
+				for(int i=0;i<objPanList.size();i++){
+					canvas.getChildren().add(objPanList.get(i));
+				}
+				for(int i=0;i<lineList.size();i++){
+					canvas.getChildren().add(lineList.get(i));
 				}
 				
 				System.out.println("Mode is : "+btnMode);
@@ -1308,6 +1380,7 @@ public class Main extends Application {
 	    protected Pane ptemp ;
 	    */
 		protected MyClass myClass ;
+
 		protected MyCase myCase;
 		protected MyLine myLine;
 		protected ObjPane objPane;
@@ -1353,9 +1426,16 @@ public class Main extends Application {
 	    protected void drawRect(){
 			myClass = new MyClass();
 			objPane = new ObjPane();
-			
-
-			
+			/*
+			Line midline = new Line();
+			midline.setStrokeWidth(2);
+			midline.setStartX(0);
+			midline.setStartY(40);
+			midline.setEndX(100);
+			midline.setEndY(40);
+			midline.setDisable(true);
+			objPane.getChildren().add(midline);
+			 */
 			objPane.setidObjIndex(idObjIndex);
 			idObjIndex++;
 			
@@ -1370,6 +1450,8 @@ public class Main extends Application {
 			
 			myClass.setDisable(true);
 			objPane.getChildren().add(myClass);
+
+
 		
 			objPanList.add(objPane);
 
