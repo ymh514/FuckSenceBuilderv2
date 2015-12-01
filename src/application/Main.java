@@ -1426,18 +1426,19 @@ public class Main extends Application {
 	    protected void drawRect(){
 			myClass = new MyClass();
 			objPane = new ObjPane();
-			/*
-			Line midline = new Line();
-			midline.setStrokeWidth(2);
-			midline.setStartX(0);
-			midline.setStartY(40);
-			midline.setEndX(100);
-			midline.setEndY(40);
-			midline.setDisable(true);
-			objPane.getChildren().add(midline);
-			 */
+			
+
+			
 			objPane.setidObjIndex(idObjIndex);
 			idObjIndex++;
+			
+			Line midline = new Line();
+			midline.setStrokeWidth(2);
+			midline.setStroke(Color.WHITE);
+			midline.setStartX(objPane.getLayoutX());
+			midline.setStartY(objPane.getLayoutX()+40);
+			midline.setEndX(objPane.getLayoutX()+100);
+			midline.setEndY(objPane.getLayoutX()+40);
 			
 			objPane.setStyle("-fx-background-color: black;");
 			objPane.setLayoutX(myClass.getX1());
@@ -1448,8 +1449,14 @@ public class Main extends Application {
 			objPane.setX2(myClass.getX1()+100);
 			objPane.setY2(myClass.getY1()+120);
 			
+
+			
+			midline.setDisable(true);
+
 			myClass.setDisable(true);
 			objPane.getChildren().add(myClass);
+			objPane.getChildren().add(midline);
+
 
 
 		
@@ -1490,8 +1497,8 @@ public class Main extends Application {
 			if(event.getTarget()instanceof Main.ObjPane){
 	          	orgSceneX = event.getX();
 	  	        orgSceneY = event.getY();
-	  	        int disx = (int) ((event.getSceneX())-(event.getSceneX()));
-	  	        int disy = (int) ((event.getSceneY())-(event.getSceneY()));
+	  	        //int disx = (int) ((event.getSceneX())-(event.getSceneX()));
+	  	       // int disy = (int) ((event.getSceneY())-(event.getSceneY()));
 
 	  	        System.out.println(orgSceneX);
 	  	        System.out.println(orgSceneY);
@@ -1500,8 +1507,8 @@ public class Main extends Application {
 
 	  	        ObjPane p = ((ObjPane) (event.getTarget()));
 	  	        
-	  	        orgTranslateX = event.getX();
-	  	        orgTranslateY = event.getY();  
+	  	        orgTranslateX = p.getLayoutX();
+	  	        orgTranslateY = p.getLayoutY();  
 			}
 		}
 		
@@ -1522,23 +1529,23 @@ public class Main extends Application {
             double offsetX = event.getX() - orgSceneX;
             double offsetY = event.getY() - orgSceneY;
 
-            double newTranslateX = orgTranslateX + offsetX;
-            double newTranslateY = orgTranslateY + offsetY;
+            //double newTranslateX = orgTranslateX + offsetX;
+            //double newTranslateY = orgTranslateY + offsetY;
           
             // only move objpane
 			if(event.getTarget()instanceof Main.ObjPane){
 				
 				ObjPane p = ((ObjPane) (event.getTarget()));
 
-				p.setX1((int)newTranslateX);
-				p.setY1((int)newTranslateY);
-				p.setX2((int) (newTranslateX+p.getWidth()-4));
-				p.setY2((int) (newTranslateY+p.getHeight()-4));
+				p.setX1((int)orgTranslateX+(int)offsetX);
+				p.setY1((int)orgTranslateY+(int)offsetY);
+				p.setX2((int)(orgTranslateX+(int)offsetX+p.getWidth()-4));
+				p.setY2((int)(orgTranslateY+(int)offsetY+p.getHeight()-4));
 				//p.setStyle("-fx-background-color: black;");
 				
 			
-		    	p.setLayoutX(newTranslateX);
-		    	p.setLayoutY(newTranslateY);
+		    	p.setLayoutX(orgTranslateX+offsetX);
+		    	p.setLayoutY(orgTranslateY+offsetY);
 				//p.setTranslateX(newTranslateX);
             	//p.setTranslateY(newTranslateY);
 			}
