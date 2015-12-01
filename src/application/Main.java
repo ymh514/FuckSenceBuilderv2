@@ -1,7 +1,12 @@
 package application;
 
 
+import java.awt.image.renderable.RenderContext;
+import java.util.ArrayList;
+
 import javax.sound.sampled.LineEvent;
+
+import org.w3c.dom.css.Rect;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -38,10 +43,12 @@ import javafx.scene.text.Text;
 
 public class Main extends Application {
 
+	public int idIndex = 0;
 	int x1, x2, y1, y2;
 	double orgSceneX, orgSceneY;
     double orgTranslateX, orgTranslateY;
     int btnMode;
+    private static ArrayList<ObjPane> objPanList = new ArrayList<ObjPane>();
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	private mousePress mousePress = new mousePress();
@@ -78,6 +85,8 @@ public class Main extends Application {
 			Button btnClass = new Button("", new ImageView(new Image(getClass().getResourceAsStream("5.png"))));
 			Button btnUseCase = new Button("", new ImageView(new Image(getClass().getResourceAsStream("6.png"))));
 
+			
+			
 			btnSelect.setOnMouseClicked(e -> {
 				btnMode=1;
 				btnSelect.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("1_1.png"))));
@@ -90,26 +99,97 @@ public class Main extends Application {
 				System.out.println("Mode is : "+btnMode);
 				canvas.setOnMousePressed(e2 ->{
 					mousePress.handle(e2);
-					//if(e2.getTarget() instanceof Rectangle){
-						//Circle c1 = new Circle();
-						
-				       // Node p = ((Node) (e2.getTarget()));
 
-				      //  System.out.println(e2.getSceneX());
-				      //  System.out.println(e2.getSceneY());
-
+					if(e2.getTarget() instanceof Main.ObjPane){
 						
-					//}
-					System.out.println(e2.getTarget());
+						if(canvas.getChildren().size()>0){
+							for(int j=0;j<canvas.getChildren().size();j++){
+								if(canvas.getChildren().get(j) instanceof Main.ObjPane){
+									ObjPane q = (ObjPane) canvas.getChildren().get(j);
+									if(q.getChildren().size()>1){
+										int i = 4;
+										while(i!=0){
+										q.getChildren().remove(1);
+										i--;
+										}
+									}
+								}
+							}
+						}
+						
+						
+						ObjPane p = (ObjPane)(e2.getTarget());
+						Rectangle rcp1 = new Rectangle(p.getcp1x(),p.getcp1y(),4,4);
+						Rectangle rcp2 = new Rectangle(p.getcp2x(),p.getcp2y(),4,4);
+						Rectangle rcp3 = new Rectangle(p.getcp3x(),p.getcp3y(),4,4);
+						Rectangle rcp4 = new Rectangle(p.getcp4x(),p.getcp4y(),4,4);
+
+						rcp1.setFill(Color.BLUE);
+						rcp2.setFill(Color.BLUE);
+						rcp3.setFill(Color.BLUE);
+						rcp4.setFill(Color.BLUE);
+
+						p.getChildren().addAll(rcp1,rcp2,rcp3,rcp4);
+
+					}
+					
+					//clean all connection ports
+					if(e2.getTarget() instanceof Main.MyPane){
+						if(canvas.getChildren().size()>0){
+							for(int j=0;j<canvas.getChildren().size();j++){
+								if(canvas.getChildren().get(j) instanceof Main.ObjPane){
+									ObjPane q = (ObjPane) canvas.getChildren().get(j);
+									if(q.getChildren().size()>1){
+										int i = 4;
+										while(i!=0){
+										q.getChildren().remove(1);
+										i--;
+										}
+									}
+								}
+							}
+						}
+					}
 				});
+				
 				canvas.setOnMouseDragged(e3 ->{
 					mouseDragged.handle(e3);
-			       // Node p = ((Node) (e3.getTarget()));
 
-					//System.out.println(p.getTranslateX());
-					//System.out.println(p.getTranslateY());
-
+					if(e3.getTarget() instanceof Main.ObjPane){
+						ObjPane p = (ObjPane)(e3.getTarget());
+						System.out.print(p.getChildren());
+						if(p.getChildren().size()>1){
+							int i = 4;
+							while(i!=0){
+								p.getChildren().remove(1);
+								i--;
+							}
+						}
+					}
+					
 				});
+				
+				canvas.setOnMouseReleased(e1 ->{
+
+					mouseRelease.handle(e1);
+				
+					if(e1.getTarget() instanceof Main.ObjPane){
+						ObjPane p = (ObjPane)(e1.getTarget());
+						Rectangle rcp1 = new Rectangle(p.getcp1x(),p.getcp1y(),4,4);
+						Rectangle rcp2 = new Rectangle(p.getcp2x(),p.getcp2y(),4,4);
+						Rectangle rcp3 = new Rectangle(p.getcp3x(),p.getcp3y(),4,4);
+						Rectangle rcp4 = new Rectangle(p.getcp4x(),p.getcp4y(),4,4);
+
+						rcp1.setFill(Color.BLUE);
+						rcp2.setFill(Color.BLUE);
+						rcp3.setFill(Color.BLUE);
+						rcp4.setFill(Color.BLUE);
+
+						p.getChildren().addAll(rcp1,rcp2,rcp3,rcp4);
+						
+					}
+				});
+				
 				
 			});
 
@@ -122,33 +202,89 @@ public class Main extends Application {
 				btnClass.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("5.png"))));
 				btnUseCase.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("6.png"))));
 
+				if(canvas.getChildren().size()>0){
+					for(int j=0;j<canvas.getChildren().size();j++){
+						if(canvas.getChildren().get(j) instanceof Main.ObjPane){
+							ObjPane q = (ObjPane) canvas.getChildren().get(j);
+							if(q.getChildren().size()>1){
+								int i = 4;
+								while(i!=0){
+								q.getChildren().remove(1);
+								i--;
+								}
+							}
+						}
+					}
+				}
+				
 				/*
 				 * draw line 
 				 */
 				System.out.println("Mode is : "+btnMode);
 				canvas.setOnMousePressed(e2 ->{
-					//if(e2.getTarget() instanceof Pane){
-						
-					//}else{
+					if(e2.getTarget() instanceof Main.ObjPane){
+						ObjPane p = (ObjPane)(e2.getTarget());
+						System.out.println("press get target : "+e2.getTarget());
+
 						x1 = mousePress.getX(e2);
 						y1 = mousePress.getY(e2);
-						canvas.drawLine();
-					//}
+						
+						System.out.println("x1 : " +x1+" y1 :"+y1);
+						//System.out.println(checkObj(x1, y1));
+						System.out.println("xp1 : " +p.getcp1x()+" yp1 :"+p.getcp1y());
+
+						double distcp1 = Math.hypot((p.getcp1x()+p.getX1())-x1,(p.getcp1y()+p.getY1())-y1);
+						double distcp2 = Math.hypot((p.getcp2x()+p.getX1())-x1,(p.getcp2y()+p.getY1())-y1);
+						double distcp3 = Math.hypot((p.getcp3x()+p.getX1())-x1,(p.getcp3y()+p.getY1())-y1);
+						double distcp4 = Math.hypot((p.getcp4x()+p.getX1())-x1,(p.getcp4y()+p.getY1())-y1);
+						double dtemp = Math.min(distcp1, Math.min(distcp2, Math.min(distcp3,distcp4)));
+						
+						if (dtemp == distcp1){
+							canvas.drawLine(p.getcp1x()+p.getX1(),p.getcp1y()+p.getY1());
+						}else if(dtemp == distcp2){
+							canvas.drawLine(p.getcp2x()+p.getX1(),p.getcp2y()+p.getY1());
+						}else if(dtemp == distcp3){
+							canvas.drawLine(p.getcp3x()+p.getX1(),p.getcp3y()+p.getY1());
+						}else if(dtemp == distcp4){
+							canvas.drawLine(p.getcp4x()+p.getX1(),p.getcp4y()+p.getY1());
+						}
+					}
+
 				});
 				canvas.setOnMouseDragged(e3 ->{
-					//if(e3.getTarget() instanceof Pane){
-						
-					//}
-					//else{
 						x2 = mouseDragged.getX(e3);
 						y2 = mouseDragged.getY(e3);
-						canvas.tuneLine();
-					//}
+						canvas.tuneLine(x2,y2);
+	
 				});
 				canvas.setOnMouseReleased(e1 ->{
-					x2 = mouseRelease.getX(e1);
-					y2 = mouseRelease.getY(e1);
+					System.out.println("release get target : "+e1.getTarget());
+					if(e1.getTarget() instanceof Main.ObjPane){
+						
+						ObjPane p = (ObjPane)(e1.getTarget());
+						x2 = mouseDragged.getX(e1);
+						y2 = mouseDragged.getY(e1);
+			
+						
+						double distcp1 = Math.hypot((p.getcp1x()+p.getX1())-x2,(p.getcp1y()+p.getY1())-y2);
+						double distcp2 = Math.hypot((p.getcp2x()+p.getX1())-x2,(p.getcp2y()+p.getY1())-y2);
+						double distcp3 = Math.hypot((p.getcp3x()+p.getX1())-x2,(p.getcp3y()+p.getY1())-y2);
+						double distcp4 = Math.hypot((p.getcp4x()+p.getX1())-x2,(p.getcp4y()+p.getY1())-y2);
+	
+						double dtemp = Math.min(distcp1, Math.min(distcp2, Math.min(distcp3,distcp4)));
+						
+						if (dtemp == distcp1){
+							canvas.tuneLine(p.getcp1x()+p.getX1(),p.getcp1y()+p.getY1());
+						}else if(dtemp == distcp2){
+							canvas.tuneLine(p.getcp2x()+p.getX1(),p.getcp2y()+p.getY1());
+						}else if(dtemp == distcp3){
+							canvas.tuneLine(p.getcp3x()+p.getX1(),p.getcp3y()+p.getY1());
+						}else if(dtemp == distcp4){
+							canvas.tuneLine(p.getcp4x()+p.getX1(),p.getcp4y()+p.getY1());
+						}
+					}
 				});
+						
 			});
 			
 			btnGeneraliztionLine.setOnMouseClicked(e -> {
@@ -160,6 +296,21 @@ public class Main extends Application {
 				btnClass.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("5.png"))));
 				btnUseCase.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("6.png"))));
 
+				if(canvas.getChildren().size()>0){
+					for(int j=0;j<canvas.getChildren().size();j++){
+						if(canvas.getChildren().get(j) instanceof Main.ObjPane){
+							ObjPane q = (ObjPane) canvas.getChildren().get(j);
+							if(q.getChildren().size()>1){
+								int i = 4;
+								while(i!=0){
+								q.getChildren().remove(1);
+								i--;
+								}
+							}
+						}
+					}
+				}
+				
 				System.out.println("Mode is : "+btnMode);
 			});
 			
@@ -172,6 +323,21 @@ public class Main extends Application {
 				btnClass.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("5.png"))));
 				btnUseCase.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("6.png"))));
 
+				if(canvas.getChildren().size()>0){
+					for(int j=0;j<canvas.getChildren().size();j++){
+						if(canvas.getChildren().get(j) instanceof Main.ObjPane){
+							ObjPane q = (ObjPane) canvas.getChildren().get(j);
+							if(q.getChildren().size()>1){
+								int i = 4;
+								while(i!=0){
+								q.getChildren().remove(1);
+								i--;
+								}
+							}
+						}
+					}
+				}
+				
 				System.out.println("Mode is : "+btnMode);
 			});
 			
@@ -184,6 +350,21 @@ public class Main extends Application {
 				btnClass.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("5_1.png"))));
 				btnUseCase.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("6.png"))));
 
+				if(canvas.getChildren().size()>0){
+					for(int j=0;j<canvas.getChildren().size();j++){
+						if(canvas.getChildren().get(j) instanceof Main.ObjPane){
+							ObjPane q = (ObjPane) canvas.getChildren().get(j);
+							if(q.getChildren().size()>1){
+								int i = 4;
+								while(i!=0){
+								q.getChildren().remove(1);
+								i--;
+								}
+							}
+						}
+					}
+				}
+				
 				System.out.println("Mode is : "+btnMode);
 				canvas.setOnMousePressed(e1 ->{
 					x1 = mousePress.getX(e1);
@@ -209,6 +390,21 @@ public class Main extends Application {
 				btnClass.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("5.png"))));
 				btnUseCase.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("6_1.png"))));
 
+				if(canvas.getChildren().size()>0){
+					for(int j=0;j<canvas.getChildren().size();j++){
+						if(canvas.getChildren().get(j) instanceof Main.ObjPane){
+							ObjPane q = (ObjPane) canvas.getChildren().get(j);
+							if(q.getChildren().size()>1){
+								int i = 4;
+								while(i!=0){
+								q.getChildren().remove(1);
+								i--;
+								}
+							}
+						}
+					}
+				}
+				
 				System.out.println("Mode is : "+btnMode);
 				canvas.setOnMousePressed(e1 ->{
 					x1 = mousePress.getX(e1);
@@ -252,47 +448,65 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	private int checkObj(double x, double y) {
+		for (int i = 0; i < objPanList.size(); i++) {
+			if (x >= objPanList.get(i).px1 && x <= objPanList.get(i).px2)
+				if (y >= objPanList.get(i).py1 && y <= objPanList.get(i).py2)
+					return i;
+
+		}
+		return -1;
+	}
+	
 	class MyClass extends Rectangle{
 		//protected Line line = this.line;
-	    
+		int rx1=x1;
+		int ry1=y1;
+		int rx2=x1+100;
+		int ry2=y1+120;
 		public MyClass(){
 	    	this.setStroke(Color.BLACK);
 	    	this.setFill(Color.RED);
-	    	this.setX(x1);
-	    	this.setY(y1);
+	    	this.setX(0);
+	    	this.setY(0);
 	    	this.setWidth(100);
 	    	this.setHeight(120);
 		}
 		int getX1(){
-			return x1;
+			return rx1;
 		}
 		int getY1(){
-			return y1;
+			return ry1;
 		}
 		int getX2(){
-			return x2;
+			return rx2;
 		}
 		int getY2(){
-			return y2;
+			return ry2;
 		}
 		
 	}
 	
 	class MyCase extends Ellipse{
-		
+		int ex1=x1;
+		int ey1=y1;
+		int rdx=60;
+		int rdy=40;
+
 		public MyCase(){
 	    	this.setStroke(Color.BLACK);
 	    	this.setFill(Color.RED);
-	    	this.setCenterX(x1);
-	    	this.setCenterY(y1);
+	    	this.setCenterX(60);
+	    	this.setCenterY(40);
 	    	this.setRadiusX(60);
 	    	this.setRadiusY(40);
 		}
 		int getCenterX1(){
-			return x1;
+			return ex1;
 		}
 		int getCenterY1(){
-			return y1;
+			return ey1;
 		}
 		int getRadiusX1(){
 			return 60;
@@ -304,29 +518,156 @@ public class Main extends Application {
 	}
 	
 	class MyLine extends Line{
-		
-		public MyLine(){
+		int lx1;
+		int ly1;
+		int lx2;
+		int ly2;
+
+		public MyLine(int cpx1,int cpy1){
 	    	this.setStrokeWidth(2);
-	    	this.setStartX(x1);
-	    	this.setStartY(y1);
-	    	this.setEndX(x1);
-	    	this.setEndY(y1);
+	    	this.setStartX(cpx1);
+	    	this.setStartY(cpy1);
+	    	this.setEndX(cpx1);
+	    	this.setEndY(cpy1);
+	    	//lx1=x1;
+			//ly1=y1;
+
+	    	//this.setDisable(true);
 		}
 		int getX1(){
-			return x1;
+			return lx1;
 		}
 		int getY1(){
-			return y1;
+			return ly1;
 		}
 		int getX2(){
-			return x2;
+			return lx2;
 		}
 		int getY2(){
-			return y2;
+			return ly2;
 		}
-
+		
+		public void setX1(int x){
+			lx1=x;
+		}
+		public void setY1(int y){
+			ly1=y;
+		}
+		public void setX2(int x){
+			lx2=x;
+		}
+		public void setY2(int y){
+			ly2=y;
+		}
 	}
 
+	class ObjPane extends Pane{
+		int px1 ;
+		int py1 ;
+		int px2 ;
+		int py2 ;
+		int id;
+		
+		int cp1x,cp1y,cp2x,cp2y,cp3x,cp3y,cp4x,cp4y;
+	
+		public ObjPane(){
+		}
+		public void setX1(int x){
+			px1=x;
+			cp1x = (((px1+px2)/2)-px1);
+			cp1y =  py1-py1;
+			cp2x = 	px2-px1;
+			cp2y = ((py1+py2)/2)-py1;
+			cp3x = ((px1+px2)/2)-px1;
+			cp3y =	py2-py1;
+			cp4x = 	px1-px1;
+			cp4y = ((py1+py2)/2)-py1;
+			
+		}
+		public void setY1(int y){
+			py1=y;
+			cp1x = (((px1+px2)/2)-px1);
+			cp1y =  py1-py1;
+			cp2x = 	px2-px1;
+			cp2y = ((py1+py2)/2)-py1;
+			cp3x = ((px1+px2)/2)-px1;
+			cp3y =	py2-py1;
+			cp4x = 	px1-px1;
+			cp4y = ((py1+py2)/2)-py1;
+			
+		}
+		public void setX2(int x){
+			px2=x;
+			cp1x = (((px1+px2)/2)-px1);
+			cp1y =  py1-py1;
+			cp2x = 	px2-px1;
+			cp2y = ((py1+py2)/2)-py1;
+			cp3x = ((px1+px2)/2)-px1;
+			cp3y =	py2-py1;
+			cp4x = 	px1-px1;
+			cp4y = ((py1+py2)/2)-py1;
+			
+		}
+		public void setY2(int y){
+			py2=y;
+			cp1x = (((px1+px2)/2)-px1);
+			cp1y =  py1-py1;
+			cp2x = 	px2-px1;
+			cp2y = ((py1+py2)/2)-py1;
+			cp3x = ((px1+px2)/2)-px1;
+			cp3y =	py2-py1;
+			cp4x = 	px1-px1;
+			cp4y = ((py1+py2)/2)-py1;
+			
+		}
+		
+		void setIdIndex(int index) {
+			id = index;
+		}
+		
+	    int getIdIndex() {
+			return id;
+		}
+		
+		int getX1(){
+			return px1;
+		}
+		int getY1(){
+			return py1;
+		}
+		int getX2(){
+			return px2;
+		}
+		int getY2(){
+			return py2;
+		}
+		
+		int getcp1x(){
+			return cp1x;
+		}
+		int getcp1y(){
+			return cp1y;
+		}
+		int getcp2x(){
+			return cp2x;
+		}
+		int getcp2y(){
+			return cp2y;
+		}
+		int getcp3x(){
+			return cp3x;
+		}
+		int getcp3y(){
+			return cp3y;
+		}
+		int getcp4x(){
+			return cp4x;
+		}
+		int getcp4y(){
+			return cp4y;
+		}
+		
+	}
 	
 	class MyPane extends Pane {
 	    /*
@@ -338,6 +679,7 @@ public class Main extends Application {
 		protected MyClass myClass ;
 		protected MyCase myCase;
 		protected MyLine myLine;
+		protected ObjPane objPane;
 	   // public Line getLine(){
 	   // 	return this.line;
 	   // }
@@ -351,59 +693,55 @@ public class Main extends Application {
 	    	//super.setStyle("-fx-background-color: #2f4f4f");
 	    }
 	    
-	    protected void drawLine(){
-	    	myLine = new MyLine();
-	    	/*
-	    	line = new Line();
-	    	line.setStrokeWidth(2);
-	    	line.setStartX(x1);
-	    	line.setStartY(y1);
-	    	line.setEndX(x1);
-	    	line.setEndY(y1);
-	    	*/
-	    	
+	    protected void drawLine(int cpx1,int cpy1){
+	    	myLine = new MyLine(cpx1,cpy1);
 	    	super.getChildren().add(myLine);
 	    }
-	    protected void tuneLine(){
-	    	myLine.setEndX(x2);
-	    	myLine.setEndY(y2);
+	    protected void tuneLine(int cpx2,int cpy2){
+	    	myLine.setEndX(cpx2);
+	    	myLine.setEndY(cpy2);
 	    }
 	    
 	    protected void drawRect(){
 			myClass = new MyClass();
-	    	//ptemp = new Pane();
-	    	//ptemp.setStyle("-fx-background-color: black;");\
-	    	/*
-	    	rect = new Rectangle();
-	    	rect.setStroke(Color.BLACK);
-	    	rect.setFill(Color.RED);
-	    	rect.setX(x1);
-	    	rect.setY(y1);
-	    	rect.setWidth(100);
-	    	rect.setHeight(120);
-	    	*/
-	    	//ptemp.setLayoutX(x1);
-	    	//ptemp.setLayoutY(y1);
-	    	//ptemp.getChildren().add(rect);
-	    	super.getChildren().add(myClass);
+			objPane = new ObjPane();
+			objPane.setIdIndex(idIndex);
+			idIndex++;
+			
+			objPane.setStyle("-fx-background-color: black;");
+			objPane.setLayoutX(myClass.getX1());
+			objPane.setLayoutY(myClass.getY1());
+			
+			objPane.setX1(myClass.getX1());
+			objPane.setY1(myClass.getY1());
+			objPane.setX2(myClass.getX1()+100);
+			objPane.setY2(myClass.getY1()+120);
+			
+			myClass.setDisable(true);
+			objPane.getChildren().add(myClass);
+			objPanList.add(objPane);
+
+	    	super.getChildren().add(objPane);
 	    }
 	    protected void drawCase(){
 	    	myCase = new MyCase();
-	    	//ptemp = new Pane();
-	    	//ptemp.setStyle("-fx-background-color: black;");
-	    	/*
-	    	ellipse = new Ellipse();
-	    	ellipse.setStroke(Color.BLACK);
-	    	ellipse.setFill(Color.RED);
-	    	ellipse.setCenterX(x1);
-	    	ellipse.setCenterY(y1);
-	    	ellipse.setRadiusX(60);
-	    	ellipse.setRadiusY(40);
-	    	*/
-	    	//ptemp.setLayoutX(x1);
-	    	//ptemp.setLayoutY(y1);
-	    	//ptemp.getChildren().add(ellipse);
-	    	super.getChildren().add(myCase);
+			objPane = new ObjPane();
+			objPane.setIdIndex(idIndex);
+			idIndex++;
+			//objPane.setStyle("-fx-background-color: black;");
+			objPane.setLayoutX(myCase.getCenterX1());
+			objPane.setLayoutY(myCase.getCenterY1());
+			
+			objPane.setX1(myCase.getCenterX1()-myCase.getRadiusX1());
+			objPane.setY1(myCase.getCenterY1()-myCase.getRadiusY1());
+			objPane.setX2(myCase.getCenterX1()+myCase.getRadiusX1());
+			objPane.setY2(myCase.getCenterY1()+myCase.getRadiusY1());
+			
+			myCase.setDisable(true);
+			objPane.getChildren().add(myCase);
+			objPanList.add(objPane);
+
+	    	super.getChildren().add(objPane);
 
 	    }
 	}
@@ -412,19 +750,25 @@ public class Main extends Application {
 ;
 		@Override
 		public void handle(MouseEvent event){
-          if(event.getTarget()instanceof Pane){
-          }else{
+		
+            // only move objpane
 
-        	orgSceneX = event.getSceneX();
-	        orgSceneY = event.getSceneY();
-	            
-	        Node p = ((Node) (event.getTarget()));
-	
-	        orgTranslateX = p.getTranslateX();
-	        orgTranslateY = p.getTranslateY();
-            
-            
-          }
+			if(event.getTarget()instanceof Main.ObjPane){
+	          	orgSceneX = event.getX();
+	  	        orgSceneY = event.getY();
+	  	        int disx = (int) ((event.getSceneX())-(event.getSceneX()));
+	  	        int disy = (int) ((event.getSceneY())-(event.getSceneY()));
+
+	  	        System.out.println(orgSceneX);
+	  	        System.out.println(orgSceneY);
+	  	        System.out.println("x "+event.getX());
+	  	        System.out.println("y "+event.getY());
+
+	  	        ObjPane p = ((ObjPane) (event.getTarget()));
+	  	        
+	  	        orgTranslateX = event.getX();
+	  	        orgTranslateY = event.getY();  
+			}
 		}
 		
 		int getX(MouseEvent event){
@@ -441,22 +785,29 @@ public class Main extends Application {
 		public void handle(MouseEvent event) {
 			// TODO Auto-generated method stub
 
-            double offsetX = event.getSceneX() - orgSceneX;
-            double offsetY = event.getSceneY() - orgSceneY;
+            double offsetX = event.getX() - orgSceneX;
+            double offsetY = event.getY() - orgSceneY;
 
             double newTranslateX = orgTranslateX + offsetX;
             double newTranslateY = orgTranslateY + offsetY;
-          //  Pane p = ((Pane) (event.getSource()));
-  
-            if(event.getTarget()instanceof Pane){
-            	
-            }
-            else{
-            	Node p = ((Node) (event.getTarget()));
+          
+            // only move objpane
+			if(event.getTarget()instanceof Main.ObjPane){
+				
+				ObjPane p = ((ObjPane) (event.getTarget()));
 
-            	p.setTranslateX(newTranslateX);
-            	p.setTranslateY(newTranslateY);
-            }
+				p.setX1((int)newTranslateX);
+				p.setY1((int)newTranslateY);
+				p.setX2((int) (newTranslateX+p.getWidth()-4));
+				p.setY2((int) (newTranslateY+p.getHeight()-4));
+				//p.setStyle("-fx-background-color: black;");
+		    	
+		    	p.setLayoutX(newTranslateX);
+		    	p.setLayoutY(newTranslateY);
+				//p.setTranslateX(newTranslateX);
+            	//p.setTranslateY(newTranslateY);
+			}
+            
             
 		}
 		int getX(MouseEvent event){
