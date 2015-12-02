@@ -1,6 +1,7 @@
 package application;
 
 
+import java.awt.Polygon;
 import java.awt.image.renderable.RenderContext;
 import java.util.ArrayList;
 
@@ -50,12 +51,15 @@ public class Main extends Application {
 
 	public int idObjIndex = 0;
 	public int idLineIndex = 0;
+	public int cHeadIndex = 0;
 	int x1, x2, y1, y2;
 	double orgSceneX, orgSceneY;
     double orgTranslateX, orgTranslateY;
     int btnMode;
     private static ArrayList<ObjPane> objPanList = new ArrayList<ObjPane>();
     private static ArrayList<MyLine> lineList = new ArrayList<MyLine>();
+    private static ArrayList<ComHead> cHead = new ArrayList<ComHead>();
+    
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	private mousePress mousePress = new mousePress();
@@ -195,7 +199,9 @@ public class Main extends Application {
 						for(int i=0;i<lineList.size();i++){
 							canvas.getChildren().add(lineList.get(i));
 						}
-						
+						for(int i=0;i<cHead.size();i++){
+							canvas.getChildren().add(cHead.get(i));
+						}
 
 						double x1 = p.getLayoutX();
 						double y1 = p.getLayoutY();
@@ -270,6 +276,9 @@ public class Main extends Application {
 						for(int i=0;i<lineList.size();i++){
 							canvas.getChildren().add(lineList.get(i));
 						}
+						for(int i=0;i<cHead.size();i++){
+							canvas.getChildren().add(cHead.get(i));
+						}
 					}
 				});
 				
@@ -330,6 +339,9 @@ public class Main extends Application {
 								for(int i=0;i<lineList.size();i++){
 									canvas.getChildren().add(lineList.get(i));
 								}
+								for(int i=0;i<cHead.size();i++){
+									canvas.getChildren().add(cHead.get(i));
+								}
 								//System.out.println(lineList.get(thisLineId).lx1);
 								//System.out.println(lineList.get(thisLineId).ly1);
 								
@@ -338,9 +350,11 @@ public class Main extends Application {
 							}
 							else{
 								int thisLineId = p.getCp1LineId();
-								
+															
 								MyLine l = (MyLine) (lineList.get(thisLineId));
 															
+
+								
 								lineList.remove(thisLineId);
 								MyLine newLine = new MyLine(p.getcp1x(), p.getcp1y());
 								System.out.println("------"+thisLineId);	
@@ -356,12 +370,22 @@ public class Main extends Application {
 								lineList.get(thisLineId).setX1(l.lx1);
 								lineList.get(thisLineId).setY1(l.ly1);
 								
+								for(int i =0;i<cHead.size();i++){
+									if(thisLineId==cHead.get(i).getLinkLineId()){
+										cHead.get(i).setX(p.cp1x+p.getX1()-5);
+										cHead.get(i).setY(p.cp1y+p.getY1()-5);
+									}
+								}
+								
 								canvas.getChildren().clear();
 								for(int i=0;i<objPanList.size();i++){
 									canvas.getChildren().add(objPanList.get(i));
 								}
 								for(int i=0;i<lineList.size();i++){
 									canvas.getChildren().add(lineList.get(i));
+								}
+								for(int i=0;i<cHead.size();i++){
+									canvas.getChildren().add(cHead.get(i));
 								}
 								//System.out.println(lineList.get(thisLineId).lx1);
 								//System.out.println(lineList.get(thisLineId).ly1);
@@ -401,6 +425,9 @@ public class Main extends Application {
 								for(int i=0;i<lineList.size();i++){
 									canvas.getChildren().add(lineList.get(i));
 								}
+								for(int i=0;i<cHead.size();i++){
+									canvas.getChildren().add(cHead.get(i));
+								}
 								//System.out.println(lineList.get(thisLineId).lx1);
 								//System.out.println(lineList.get(thisLineId).ly1);
 								
@@ -426,12 +453,22 @@ public class Main extends Application {
 								lineList.get(thisLineId).setX1(l.lx1);
 								lineList.get(thisLineId).setY1(l.ly1);
 								
+								for(int i =0;i<cHead.size();i++){
+									if(thisLineId==cHead.get(i).getLinkLineId()){
+										cHead.get(i).setX(p.cp2x+p.getX1()-5);
+										cHead.get(i).setY(p.cp2y+p.getY1()-5);
+									}
+								}
+								
 								canvas.getChildren().clear();
 								for(int i=0;i<objPanList.size();i++){
 									canvas.getChildren().add(objPanList.get(i));
 								}
 								for(int i=0;i<lineList.size();i++){
 									canvas.getChildren().add(lineList.get(i));
+								}
+								for(int i=0;i<cHead.size();i++){
+									canvas.getChildren().add(cHead.get(i));
 								}
 								//System.out.println(lineList.get(thisLineId).lx1);
 								//System.out.println(lineList.get(thisLineId).ly1);
@@ -471,6 +508,9 @@ public class Main extends Application {
 								for(int i=0;i<lineList.size();i++){
 									canvas.getChildren().add(lineList.get(i));
 								}
+								for(int i=0;i<cHead.size();i++){
+									canvas.getChildren().add(cHead.get(i));
+								}
 								//System.out.println(lineList.get(thisLineId).lx1);
 								//System.out.println(lineList.get(thisLineId).ly1);
 								
@@ -497,12 +537,22 @@ public class Main extends Application {
 								lineList.get(thisLineId).setX1(l.lx1);
 								lineList.get(thisLineId).setY1(l.ly1);
 								
+								for(int i =0;i<cHead.size();i++){
+									if(thisLineId==cHead.get(i).getLinkLineId()){
+										cHead.get(i).setX(p.cp3x+p.getX1()-5);
+										cHead.get(i).setY(p.cp3y+p.getY1()-5);
+									}
+								}
+								
 								canvas.getChildren().clear();
 								for(int i=0;i<objPanList.size();i++){
 									canvas.getChildren().add(objPanList.get(i));
 								}
 								for(int i=0;i<lineList.size();i++){
 									canvas.getChildren().add(lineList.get(i));
+								}
+								for(int i=0;i<cHead.size();i++){
+									canvas.getChildren().add(cHead.get(i));
 								}
 								//System.out.println(lineList.get(thisLineId).lx1);
 								//System.out.println(lineList.get(thisLineId).ly1);
@@ -542,6 +592,9 @@ public class Main extends Application {
 								for(int i=0;i<lineList.size();i++){
 									canvas.getChildren().add(lineList.get(i));
 								}
+								for(int i=0;i<cHead.size();i++){
+									canvas.getChildren().add(cHead.get(i));
+								}
 								//System.out.println(lineList.get(thisLineId).lx1);
 								//System.out.println(lineList.get(thisLineId).ly1);
 								
@@ -568,12 +621,22 @@ public class Main extends Application {
 								lineList.get(thisLineId).setX1(l.lx1);
 								lineList.get(thisLineId).setY1(l.ly1);
 								
+								for(int i =0;i<cHead.size();i++){
+									if(thisLineId==cHead.get(i).getLinkLineId()){
+										cHead.get(i).setX(p.cp4x+p.getX1()-5);
+										cHead.get(i).setY(p.cp4y+p.getY1()-5);
+									}
+								}
+								
 								canvas.getChildren().clear();
 								for(int i=0;i<objPanList.size();i++){
 									canvas.getChildren().add(objPanList.get(i));
 								}
 								for(int i=0;i<lineList.size();i++){
 									canvas.getChildren().add(lineList.get(i));
+								}
+								for(int i=0;i<cHead.size();i++){
+									canvas.getChildren().add(cHead.get(i));
 								}
 								//System.out.println(lineList.get(thisLineId).lx1);
 								//System.out.println(lineList.get(thisLineId).ly1);
@@ -627,6 +690,9 @@ public class Main extends Application {
 				}
 				for(int i=0;i<lineList.size();i++){
 					canvas.getChildren().add(lineList.get(i));
+				}
+				for(int i=0;i<cHead.size();i++){
+					canvas.getChildren().add(cHead.get(i));
 				}
 				/*
 				 * draw line 
@@ -775,6 +841,9 @@ public class Main extends Application {
 				for(int i=0;i<lineList.size();i++){
 					canvas.getChildren().add(lineList.get(i));
 				}
+				for(int i=0;i<cHead.size();i++){
+					canvas.getChildren().add(cHead.get(i));
+				}
 				/*
 				 * draw line 
 				 */
@@ -916,6 +985,9 @@ public class Main extends Application {
 				for(int i=0;i<lineList.size();i++){
 					canvas.getChildren().add(lineList.get(i));
 				}
+				for(int i=0;i<cHead.size();i++){
+					canvas.getChildren().add(cHead.get(i));
+				}
 				/*
 				 * draw line 
 				 */
@@ -939,24 +1011,24 @@ public class Main extends Application {
 						double dtemp = Math.min(distcp1, Math.min(distcp2, Math.min(distcp3,distcp4)));
 						
 						if (dtemp == distcp1){
-							canvas.drawLine(p.getcp1x()+p.getX1(),p.getcp1y()+p.getY1());
+							canvas.drawComLine(p.getcp1x()+p.getX1(),p.getcp1y()+p.getY1());
 							p.setCp1Linked(true);
 							p.setCp1LineId(canvas.getTheLineId());
 							p.setCp1LinedSE(false);
 						}else if(dtemp == distcp2){
-							canvas.drawLine(p.getcp2x()+p.getX1(),p.getcp2y()+p.getY1());
+							canvas.drawComLine(p.getcp2x()+p.getX1(),p.getcp2y()+p.getY1());
 							p.setCp2Linked(true);
 							p.setCp2LineId(canvas.getTheLineId());
 							p.setCp2LinedSE(false);
 
 						}else if(dtemp == distcp3){
-							canvas.drawLine(p.getcp3x()+p.getX1(),p.getcp3y()+p.getY1());
+							canvas.drawComLine(p.getcp3x()+p.getX1(),p.getcp3y()+p.getY1());
 							p.setCp3Linked(true);
 							p.setCp3LineId(canvas.getTheLineId());
 							p.setCp3LinedSE(false);
 
 						}else if(dtemp == distcp4){
-							canvas.drawLine(p.getcp4x()+p.getX1(),p.getcp4y()+p.getY1());
+							canvas.drawComLine(p.getcp4x()+p.getX1(),p.getcp4y()+p.getY1());
 							p.setCp4Linked(true);
 							p.setCp4LineId(canvas.getTheLineId());
 							p.setCp4LinedSE(false);
@@ -968,7 +1040,7 @@ public class Main extends Application {
 				canvas.setOnMouseDragged(e3 ->{
 						x2 = mouseDragged.getX(e3);
 						y2 = mouseDragged.getY(e3);
-						canvas.dragTuneLine(x2,y2);
+						canvas.dragTuneComLine(x2,y2);
 	
 				});
 				canvas.setOnMouseReleased(e1 ->{
@@ -986,28 +1058,74 @@ public class Main extends Application {
 					double distcp4 = Math.hypot((p.getcp4x()+p.getX1())-x2,(p.getcp4y()+p.getY1())-y2);
 	
 					double dtemp = Math.min(distcp1, Math.min(distcp2, Math.min(distcp3,distcp4)));
-						
+					
+
 					if (dtemp == distcp1){
-						canvas.dragTuneLine(p.getcp1x()+p.getX1(),p.getcp1y()+p.getY1());
+						canvas.dragTuneComLine(p.getcp1x()+p.getX1(),p.getcp1y()+p.getY1());
+						ComHead cRect = new ComHead(p.getcp1x()+p.getX1()-5,p.getcp1y()+p.getY1()-5,10,10);
+						cRect.setStroke(Color.BLACK);
+						cRect.setFill(Color.TRANSPARENT);
+						cHeadIndex++;
 						p.setCp1Linked(true);
 						p.setCp1LineId(canvas.getTheLineId());
+						cRect.setLinkLineId(canvas.getTheLineId());
+						
 						p.setCp1LinedSE(true);
+						cHead.add(cRect);
+
+						canvas.getChildren().add(cRect);
 
 					}else if(dtemp == distcp2){
-						canvas.dragTuneLine(p.getcp2x()+p.getX1(),p.getcp2y()+p.getY1());
+						
+						canvas.dragTuneComLine(p.getcp2x()+p.getX1(),p.getcp2y()+p.getY1());
+						ComHead cRect = new ComHead(p.getcp2x()+p.getX1()-5,p.getcp2y()+p.getY1()-5,10,10);
+						cRect.setStroke(Color.BLACK);
+						cRect.setFill(Color.TRANSPARENT);
+						cHeadIndex++;
+						
 						p.setCp2Linked(true);
 						p.setCp2LineId(canvas.getTheLineId());
+						cRect.setLinkLineId(canvas.getTheLineId());
+
 						p.setCp2LinedSE(true);
+						cHead.add(cRect);
+
+						canvas.getChildren().add(cRect);
+
 					}else if(dtemp == distcp3){
-						canvas.dragTuneLine(p.getcp3x()+p.getX1(),p.getcp3y()+p.getY1());
+						
+						canvas.dragTuneComLine(p.getcp3x()+p.getX1(),p.getcp3y()+p.getY1());
+						ComHead cRect = new ComHead(p.getcp3x()+p.getX1()-5,p.getcp3y()+p.getY1()-5,10,10);
+						cRect.setStroke(Color.BLACK);
+						cRect.setFill(Color.TRANSPARENT);
+						cHeadIndex++;
+						
 						p.setCp3Linked(true);
 						p.setCp3LineId(canvas.getTheLineId());
+						cRect.setLinkLineId(canvas.getTheLineId());
+
 						p.setCp3LinedSE(true);
+						cHead.add(cRect);
+
+						canvas.getChildren().add(cRect);
+
 					}else if(dtemp == distcp4){
-						canvas.dragTuneLine(p.getcp4x()+p.getX1(),p.getcp4y()+p.getY1());
+
+						canvas.dragTuneComLine(p.getcp4x()+p.getX1(),p.getcp4y()+p.getY1());
+						ComHead cRect = new ComHead(p.getcp4x()+p.getX1()-5,p.getcp4y()+p.getY1()-5,10,10);
+						cRect.setStroke(Color.BLACK);
+						cRect.setFill(Color.TRANSPARENT);
+						cHeadIndex++;
+						
 						p.setCp4Linked(true);
 						p.setCp4LineId(canvas.getTheLineId());
+						cRect.setLinkLineId(canvas.getTheLineId());
+
 						p.setCp4LinedSE(true);
+						cHead.add(cRect);
+
+						canvas.getChildren().add(cRect);
+
 					}
 				});
 						
@@ -1054,6 +1172,9 @@ public class Main extends Application {
 				}
 				for(int i=0;i<lineList.size();i++){
 					canvas.getChildren().add(lineList.get(i));
+				}
+				for(int i=0;i<cHead.size();i++){
+					canvas.getChildren().add(cHead.get(i));
 				}
 				
 				System.out.println("Mode is : "+btnMode);
@@ -1112,6 +1233,9 @@ public class Main extends Application {
 				}
 				for(int i=0;i<lineList.size();i++){
 					canvas.getChildren().add(lineList.get(i));
+				}
+				for(int i=0;i<cHead.size();i++){
+					canvas.getChildren().add(cHead.get(i));
 				}
 				
 				System.out.println("Mode is : "+btnMode);
@@ -1515,7 +1639,7 @@ public class Main extends Application {
 		protected MyCase myCase;
 		protected MyLine myLine;
 		protected ObjPane objPane;
-		protected MyLine myComLine;
+		//protected MyLine myComLine;
 	   // public Line getLine(){
 	   // 	return this.line;
 	   // }
@@ -1575,7 +1699,7 @@ public class Main extends Application {
 			objPane.setY2(myClass.getY1()+120);		
 			
 			Line midline1 = new Line();
-			midline1.setStrokeWidth(2);
+			midline1.setStrokeWidth(1);
 			midline1.setStroke(Color.BLACK);
 			
 			midline1.setStartX(0);
@@ -1584,7 +1708,7 @@ public class Main extends Application {
 			midline1.setEndY(40);
 			
 			Line midline2 = new Line();
-			midline2.setStrokeWidth(2);
+			midline2.setStrokeWidth(1);
 			midline2.setStroke(Color.BLACK);
 			
 			midline2.setStartX(0);
@@ -1627,27 +1751,57 @@ public class Main extends Application {
 
 	    }
 	    protected void drawComLine(int cpx1,int cpy1){
-	    	myComLine = new MyLine(cpx1,cpy1);
-	    	myComLine.setidLineIndex(idLineIndex);
+	    	myLine = new MyLine(cpx1,cpy1);
+	    	myLine.setidLineIndex(idLineIndex);
 	    	idLineIndex++;
-	    	lineList.add(myComLine);
-	    	super.getChildren().add(myComLine);
+	    	lineList.add(myLine);
+	    	super.getChildren().add(myLine);
 	    }
 	    protected void dragTuneComLine(int cpx2,int cpy2){
-	    	myComLine.setEndX(cpx2);
-	    	myComLine.setEndY(cpy2);
-	    	myComLine.setX2(cpx2);
-	    	myComLine.setY2(cpy2);
+	    	myLine.setEndX(cpx2);
+	    	myLine.setEndY(cpy2);
+	    	myLine.setX2(cpx2);
+	    	myLine.setY2(cpy2);
 	    }
 	    protected void releaseComLine(int cpx2,int cpy2){
-	    	myComLine.setEndX(cpx2);
-	    	myComLine.setEndY(cpy2);
-	    	myComLine.setX2(cpx2);
-	    	myComLine.setY2(cpy2);
+	    	myLine.setEndX(cpx2);
+	    	myLine.setEndY(cpy2);
+	    	myLine.setX2(cpx2);
+	    	myLine.setY2(cpy2);
 	    }
 
 	}
 	
+	class ComHead extends Rectangle{
+		int linkLineId;
+		public ComHead(int setX1,int setY1,int width,int height){
+	    
+	    	this.setX(setX1);
+	    	this.setY(setY1);
+	    	this.setWidth(width);
+	    	this.setHeight(height);
+		}
+		public void setLinkLineId(int index){
+			linkLineId = index;
+		}
+		int getLinkLineId(){
+			return linkLineId;
+		}
+	}
+	/*
+	class GenHead extends Polygon{
+		int linkLineId;
+		public GenHead(int setX1,int setY1){
+			this.addPoint(x, y);
+		}
+		public void setLinkLineId(int index){
+			linkLineId = index;
+		}
+		int getLinkLineId(){
+			return linkLineId;
+		}
+	}
+	*/
 	class mousePress implements EventHandler<MouseEvent>{
 ;
 		@Override
