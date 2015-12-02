@@ -102,7 +102,9 @@ public class Main extends Application {
 				canvas.setOnMousePressed(e2 ->{
 					System.out.println("press event ! ");
 					mousePress.handle(e2);
-
+					
+					System.out.println("====="+e2.getTarget());
+					
 					if(e2.getTarget() instanceof Main.ObjPane){
 						
 						ObjPane p = (ObjPane)(e2.getTarget());
@@ -113,13 +115,21 @@ public class Main extends Application {
 							for(int j=0;j<canvas.getChildren().size();j++){
 								if(canvas.getChildren().get(j) instanceof Main.ObjPane){
 									ObjPane delp = (ObjPane)(canvas.getChildren().get(j));
-									if(delp.getChildren().size()>1){
+									if(delp.getChildren().size()==7){
 										int deli=4;
 										while(deli!=0){
-											delp.getChildren().remove(1);
+											delp.getChildren().remove(3);
 											deli--;
 										}
 									}
+									else if(delp.getChildren().size()==5){
+										int i = 4;
+										while(i!=0){
+										delp.getChildren().remove(1);
+										i--;
+										}
+									}
+									
 								}
 							}
 						}
@@ -179,7 +189,14 @@ public class Main extends Application {
 							for(int j=0;j<canvas.getChildren().size();j++){
 								if(canvas.getChildren().get(j) instanceof Main.ObjPane){
 									ObjPane q = (ObjPane) canvas.getChildren().get(j);
-									if(q.getChildren().size()>1){
+									if(q.getChildren().size()==7){
+										int i = 4;
+										while(i!=0){
+										q.getChildren().remove(3);
+										i--;
+										}
+									}
+									else if(q.getChildren().size()==5){
 										int i = 4;
 										while(i!=0){
 										q.getChildren().remove(1);
@@ -528,7 +545,14 @@ public class Main extends Application {
 					for(int j=0;j<canvas.getChildren().size();j++){
 						if(canvas.getChildren().get(j) instanceof Main.ObjPane){
 							ObjPane q = (ObjPane) canvas.getChildren().get(j);
-							if(q.getChildren().size()>1){
+							if(q.getChildren().size()==7){
+								int i = 4;
+								while(i!=0){
+								q.getChildren().remove(3);
+								i--;
+								}
+							}
+							else if(q.getChildren().size()==5){
 								int i = 4;
 								while(i!=0){
 								q.getChildren().remove(1);
@@ -656,7 +680,14 @@ public class Main extends Application {
 					for(int j=0;j<canvas.getChildren().size();j++){
 						if(canvas.getChildren().get(j) instanceof Main.ObjPane){
 							ObjPane q = (ObjPane) canvas.getChildren().get(j);
-							if(q.getChildren().size()>1){
+							if(q.getChildren().size()==7){
+								int i = 4;
+								while(i!=0){
+								q.getChildren().remove(3);
+								i--;
+								}
+							}
+							else if(q.getChildren().size()==5){
 								int i = 4;
 								while(i!=0){
 								q.getChildren().remove(1);
@@ -787,7 +818,14 @@ public class Main extends Application {
 					for(int j=0;j<canvas.getChildren().size();j++){
 						if(canvas.getChildren().get(j) instanceof Main.ObjPane){
 							ObjPane q = (ObjPane) canvas.getChildren().get(j);
-							if(q.getChildren().size()>1){
+							if(q.getChildren().size()==7){
+								int i = 4;
+								while(i!=0){
+								q.getChildren().remove(3);
+								i--;
+								}
+							}
+							else if(q.getChildren().size()==5){
 								int i = 4;
 								while(i!=0){
 								q.getChildren().remove(1);
@@ -916,7 +954,14 @@ public class Main extends Application {
 					for(int j=0;j<canvas.getChildren().size();j++){
 						if(canvas.getChildren().get(j) instanceof Main.ObjPane){
 							ObjPane q = (ObjPane) canvas.getChildren().get(j);
-							if(q.getChildren().size()>1){
+							if(q.getChildren().size()==7){
+								int i = 4;
+								while(i!=0){
+								q.getChildren().remove(3);
+								i--;
+								}
+							}
+							else if(q.getChildren().size()==5){
 								int i = 4;
 								while(i!=0){
 								q.getChildren().remove(1);
@@ -942,12 +987,12 @@ public class Main extends Application {
 					canvas.drawRect();
 				});
 				canvas.setOnMouseDragged(e3 ->{
-					x2 = mouseDragged.getX(e3);
-					y2 = mouseDragged.getY(e3);
+					//x2 = mouseDragged.getX(e3);
+					//y2 = mouseDragged.getY(e3);
 				});
 				canvas.setOnMouseReleased(e2 ->{
-					x2 = mouseRelease.getX(e2);
-					y2 = mouseRelease.getY(e2);
+					//x2 = mouseRelease.getX(e2);
+					//y2 = mouseRelease.getY(e2);
 				});
 			});
 			
@@ -964,7 +1009,14 @@ public class Main extends Application {
 					for(int j=0;j<canvas.getChildren().size();j++){
 						if(canvas.getChildren().get(j) instanceof Main.ObjPane){
 							ObjPane q = (ObjPane) canvas.getChildren().get(j);
-							if(q.getChildren().size()>1){
+							if(q.getChildren().size()==7){
+								int i = 4;
+								while(i!=0){
+								q.getChildren().remove(3);
+								i--;
+								}
+							}
+							else if(q.getChildren().size()==5){
 								int i = 4;
 								while(i!=0){
 								q.getChildren().remove(1);
@@ -990,12 +1042,12 @@ public class Main extends Application {
 					canvas.drawCase();
 				});
 				canvas.setOnMouseDragged(e3 ->{
-					x2 = mouseDragged.getX(e3);
-					y2 = mouseDragged.getY(e3);
+					//x2 = mouseDragged.getX(e3);
+					//y2 = mouseDragged.getY(e3);
 				});
 				canvas.setOnMouseReleased(e2 ->{
-					x2 = mouseRelease.getX(e2);
-					y2 = mouseRelease.getY(e2);
+					//x2 = mouseRelease.getX(e2);
+					//y2 = mouseRelease.getY(e2);
 				});
 			});
 			
@@ -1432,33 +1484,40 @@ public class Main extends Application {
 			objPane.setidObjIndex(idObjIndex);
 			idObjIndex++;
 			
-			Line midline = new Line();
-			midline.setStrokeWidth(2);
-			midline.setStroke(Color.WHITE);
-			midline.setStartX(objPane.getLayoutX());
-			midline.setStartY(objPane.getLayoutX()+40);
-			midline.setEndX(objPane.getLayoutX()+100);
-			midline.setEndY(objPane.getLayoutX()+40);
-			
-			objPane.setStyle("-fx-background-color: black;");
 			objPane.setLayoutX(myClass.getX1());
 			objPane.setLayoutY(myClass.getY1());
 			
 			objPane.setX1(myClass.getX1());
 			objPane.setY1(myClass.getY1());
 			objPane.setX2(myClass.getX1()+100);
-			objPane.setY2(myClass.getY1()+120);
+			objPane.setY2(myClass.getY1()+120);		
 			
-
+			Line midline1 = new Line();
+			midline1.setStrokeWidth(2);
+			midline1.setStroke(Color.BLACK);
 			
-			midline.setDisable(true);
-
+			midline1.setStartX(0);
+			midline1.setStartY(40);
+			midline1.setEndX(100);
+			midline1.setEndY(40);
+			
+			Line midline2 = new Line();
+			midline2.setStrokeWidth(2);
+			midline2.setStroke(Color.BLACK);
+			
+			midline2.setStartX(0);
+			midline2.setStartY(80);
+			midline2.setEndX(100);
+			midline2.setEndY(80);
+			
+			//objPane.setStyle("-fx-background-color: black;");
+			
+			midline1.setDisable(true);
+			midline2.setDisable(true);
 			myClass.setDisable(true);
 			objPane.getChildren().add(myClass);
-			objPane.getChildren().add(midline);
-
-
-
+			objPane.getChildren().add(midline1);
+			objPane.getChildren().add(midline2);
 		
 			objPanList.add(objPane);
 
@@ -1469,7 +1528,7 @@ public class Main extends Application {
 			objPane = new ObjPane();
 			objPane.setidObjIndex(idObjIndex);
 			idObjIndex++;
-			objPane.setStyle("-fx-background-color: black;");
+			//objPane.setStyle("-fx-background-color: black;");
 			objPane.setLayoutX(myCase.getCenterX1());
 			objPane.setLayoutY(myCase.getCenterY1());
 			
